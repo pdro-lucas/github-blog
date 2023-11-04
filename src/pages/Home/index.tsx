@@ -1,41 +1,64 @@
+import { PostCard } from "@/components/PostCard";
 import { ProfileCard } from "@/components/ProfileCard";
+import { api } from "@/lib/api";
+import { useEffect, useState } from "react";
+
+interface User {
+  login: string;
+  avatar_url: string;
+  html_url: string;
+}
+
+export interface Post {
+  title: string;
+  html_url: string;
+  number: number;
+  body: string;
+  created_at: string;
+  user: User;
+}
 
 export function Home() {
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        const response = await api.get<Post[]>(
+          "/repos/pdro-lucas/github-blog/issues"
+        );
+
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Failed to load posts", error);
+      }
+    }
+
+    loadPosts();
+  }, []);
+
   return (
     <main className="w-full max-w-4xl px-4 mx-auto">
       <ProfileCard />
+
       <div className="mt-16 space-y-12">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="text-lg font-bold text-base-subtitle">
             Publicações
           </span>
-          <span className="text-sm text-base-span">6 Publicações</span>
+          <span className="text-sm text-base-span">
+            {posts.length} Publicaç{posts.length > 1 ? "ões" : "ão"}
+          </span>
           <input
             type="text"
             className="w-full px-4 py-3 border rounded-md outline-none bg-base-input border-base-border placeholder:text-base-border"
             placeholder="Buscar conteúdo"
           />
         </div>
-        <div className="flex flex-wrap gap-8">
-          <div className="p-8 bg-base-post rounded-xl w-[416px] space-y-5">
-            <div className="flex items-baseline justify-between gap-6">
-              <span className="text-xl font-bold text-base-title">
-                JavaScript data types and data structures
-              </span>
-              <span className="text-xs whitespace-nowrap text-base-span">
-                Há 1 dia
-              </span>
-            </div>
-            <p className="line-clamp-4">
-              Programming languages all have built-in data structures, but these
-              often differ from one language to another. This article attempts
-              to list the built-in data structures available in JavaScript and
-              what properties they have. These can be used to build other data
-              structures. Wherever possible, comparisons with other languages
-              are drawn.
-            </p>
-          </div>
-        </div>
+
+        {posts.map((post) => (
+          <PostCard key={post.number} post={post} />
+        ))}
       </div>
     </main>
   );
