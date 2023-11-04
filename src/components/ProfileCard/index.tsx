@@ -43,7 +43,7 @@ function ProfileCardComponent() {
   }
 
   return (
-    <div className="flex gap-8 p-8 -mt-16 border rounded-xl bg-base-profile border-base-border">
+    <div className="flex gap-8 p-8 -mt-16 rounded-xl bg-base-profile">
       {isLoading ? (
         <ProfileCardSkeleton />
       ) : (
