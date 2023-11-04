@@ -1,12 +1,12 @@
-import { api } from "@/lib/api";
+import { useAPI } from "@/hooks/useAPI";
 import {
-  Github,
-  Building2,
-  Users2,
   ArrowUpRight,
+  Building2,
   GitBranch,
+  Github,
+  Users2,
 } from "lucide-react";
-import { useEffect, useState, memo } from "react";
+import { memo } from "react";
 import { ProfileCardSkeleton } from "../Skeleton";
 
 interface User {
@@ -21,33 +21,32 @@ interface User {
 }
 
 function ProfileCardComponent() {
-  const [userData, setUserData] = useState({} as User);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    api
-      .get("/users/pdro-lucas")
-      .then((response) => {
-        setUserData(response.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setIsLoading(false);
-      });
-  }, []);
+  const {
+    data: userData,
+    isLoading,
+    error,
+  } = useAPI<User>("/users/pdro-lucas");
 
   if (error) {
-    return <div>Erro ao carregar os dados</div>;
+    return (
+      <div className="flex gap-8 p-8 -mt-16 rounded-xl bg-base-profile">
+        <p>{error.message}</p>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex gap-8 p-8 -mt-16 rounded-xl bg-base-profile">
+        <ProfileCardSkeleton />
+      </div>
+    );
   }
 
   return (
-    <div className="flex gap-8 p-8 -mt-16 rounded-xl bg-base-profile">
-      {isLoading ? (
-        <ProfileCardSkeleton />
-      ) : (
-        <>
+    <>
+      {userData && (
+        <div className="flex gap-8 p-8 -mt-16 rounded-xl bg-base-profile">
           <img
             src={userData.avatar_url}
             alt={userData.name}
@@ -94,9 +93,9 @@ function ProfileCardComponent() {
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 
