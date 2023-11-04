@@ -1,10 +1,11 @@
+import { Router } from "@/components/Router";
+import { BrowserRouter } from "react-router-dom";
+
 function App() {
   return (
-    <>
-      <h1 className="text-2xl bg-gray-700 text-center text-white font-bold p-4">
-        Hello World
-      </h1>
-    </>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   );
 }
 
