@@ -89,7 +89,7 @@ function ProfileCardComponent() {
 
               <div className="flex items-center gap-2 ">
                 <GitBranch size={16} />
-                <span>{userData.public_repos} repositories</span>
+                <span>{userData.public_repos} public repositories</span>
               </div>
             </div>
           </div>
