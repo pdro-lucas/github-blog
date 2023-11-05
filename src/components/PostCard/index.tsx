@@ -1,5 +1,5 @@
 import { Posts } from "@/pages/Home";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNowStrict } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import Markdown from "react-markdown";
 
@@ -15,8 +15,8 @@ export function PostCard({ post }: PostCardProps) {
           <span className="text-xl font-bold text-base-title">
             {post.title}
           </span>
-          <span className="text-xs whitespace-nowrap text-base-span">
-            {formatDistanceToNow(new Date(post.created_at), {
+          <span className="text-xs capitalize whitespace-nowrap text-base-span">
+            {formatDistanceToNowStrict(new Date(post.created_at), {
               locale: ptBR,
               addSuffix: true,
             })}
