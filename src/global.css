@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply text-base-text bg-base-background;
+    @apply text-base-text bg-base-background scrollbar-thumb-base-post scrollbar-track-base-background scrollbar-thin scroll-smooth;
   }
 }
