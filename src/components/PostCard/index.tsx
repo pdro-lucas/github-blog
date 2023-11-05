@@ -1,10 +1,10 @@
-import { Posts } from "@/pages/Home";
+import { Post } from "@/pages/Home";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import Markdown from "react-markdown";
 
 interface PostCardProps {
-  post: Posts;
+  post: Post;
 }
 
 export function PostCard({ post }: PostCardProps) {
