@@ -18,7 +18,7 @@ export interface Post {
   user: User;
 }
 
-interface PostItems {
+interface PostList {
   items: Post[];
 }
 
@@ -30,7 +30,7 @@ export function Home() {
     data: posts,
     isLoading,
     fetchData,
-  } = useAPI<PostItems>(`/search/issues?q=repo:${REPONAME}`);
+  } = useAPI<PostList>(`/search/issues?q=repo:${REPONAME}`);
 
   useEffect(() => {
     const refetchPost = setTimeout(() => {
