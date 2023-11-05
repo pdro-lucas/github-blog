@@ -1,6 +1,7 @@
 import { PostCard } from "@/components/PostCard";
 import { ProfileCard } from "@/components/ProfileCard";
 import { useAPI } from "@/hooks/useAPI";
+import { useEffect, useState } from "react";
 
 interface User {
   login: string;
@@ -18,10 +19,26 @@ export interface Posts {
 }
 
 export function Home() {
-  const { data: posts, isLoading } = useAPI<Posts[]>(
-    "/repos/pdro-lucas/github-blog/issues"
+  const [inputValue, setInputValue] = useState("");
+
+  const {
+    data: posts,
+    isLoading,
+    fetchData,
+  } = useAPI<Posts[]>(
+    "/repos/rocketseat-education/reactjs-github-blog-challenge/issues"
   );
-  console.log(posts);
+
+  useEffect(() => {
+    const refetchPost = setTimeout(() => {
+      const query = inputValue;
+      const url = `/search/issues?q=${query} repo:rocketseat-education/reactjs-github-blog-challenge`;
+
+      fetchData(url);
+    }, 2000);
+
+    return () => clearTimeout(refetchPost);
+  }, [inputValue, fetchData]);
 
   return (
     <main className="w-full max-w-4xl px-4 mx-auto">
@@ -42,12 +59,16 @@ export function Home() {
               type="text"
               className="w-full px-4 py-3 border rounded-md outline-none bg-base-input border-base-border placeholder:text-base-border"
               placeholder="Buscar conteúdo"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
             />
           </div>
 
-          {posts.map((post) => (
-            <PostCard key={post.number} post={post} />
-          ))}
+          <div className="flex flex-wrap gap-6">
+            {posts.map((post) => (
+              <PostCard key={post.number} post={post} />
+            ))}
+          </div>
         </div>
       )}
     </main>
