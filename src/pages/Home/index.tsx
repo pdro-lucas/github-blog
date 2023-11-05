@@ -1,7 +1,9 @@
+import { Loading } from "@/components/Loading";
 import { PostCard } from "@/components/PostCard";
 import { ProfileCard } from "@/components/ProfileCard";
 import { useAPI } from "@/hooks/useAPI";
 import { useEffect, useState } from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 interface User {
   login: string;
@@ -24,6 +26,8 @@ interface PostList {
 
 export function Home() {
   const [inputValue, setInputValue] = useState("");
+  const [parent] = useAutoAnimate();
+
   const REPONAME = "rocketseat-education/reactjs-github-blog-challenge";
 
   const {
@@ -44,30 +48,31 @@ export function Home() {
   }, [inputValue, fetchData]);
 
   return (
-    <main className="w-full max-w-4xl px-4 mx-auto">
+    <main className="w-full max-w-4xl px-4 mx-auto" ref={parent}>
       <ProfileCard />
 
-      {isLoading && <p>Carregando...</p>}
+      <div className="flex flex-wrap items-center justify-between gap-2 mt-16">
+        <span className="text-lg font-bold text-base-subtitle">
+          Publicações
+        </span>
+        <span className="text-sm text-base-span">
+          {posts?.items.length === 1
+            ? `${posts?.items.length} Publicação`
+            : `${posts?.items.length} Publicações`}
+        </span>
+        <input
+          type="text"
+          className="w-full px-4 py-3 border rounded-md outline-none bg-base-input border-base-border placeholder:text-base-border"
+          placeholder="Buscar conteúdo"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+      </div>
+
+      {isLoading && <Loading />}
 
       {posts && (
-        <div className="mt-16 space-y-12">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-lg font-bold text-base-subtitle">
-              Publicações
-            </span>
-            <span className="text-sm text-base-span">
-              {posts.items.length} Publicaç
-              {posts.items.length > 1 ? "ões" : "ão"}
-            </span>
-            <input
-              type="text"
-              className="w-full px-4 py-3 border rounded-md outline-none bg-base-input border-base-border placeholder:text-base-border"
-              placeholder="Buscar conteúdo"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
-          </div>
-
+        <div className="mt-12 space-y-12">
           <div className="flex flex-wrap gap-6">
             {posts.items.map((post) => (
               <PostCard key={post.number} post={post} />
