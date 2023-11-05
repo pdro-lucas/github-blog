@@ -12,7 +12,6 @@ export function useAPI<T>(fetchUrl: string, config?: AxiosRequestConfig) {
       setIsLoading(true);
 
       try {
-        // TODO - resolve type issue
         const response = await api.get<T>(url, config);
         if (response.data) {
           setData(response.data);
