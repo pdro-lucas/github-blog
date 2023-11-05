@@ -9,7 +9,7 @@ interface User {
   html_url: string;
 }
 
-export interface Posts {
+export interface Post {
   title: string;
   html_url: string;
   number: number;
@@ -18,21 +18,24 @@ export interface Posts {
   user: User;
 }
 
+interface PostItems {
+  items: Post[];
+}
+
 export function Home() {
   const [inputValue, setInputValue] = useState("");
+  const REPONAME = "rocketseat-education/reactjs-github-blog-challenge";
 
   const {
     data: posts,
     isLoading,
     fetchData,
-  } = useAPI<Posts[]>(
-    "/repos/rocketseat-education/reactjs-github-blog-challenge/issues"
-  );
+  } = useAPI<PostItems>(`/search/issues?q=repo:${REPONAME}`);
 
   useEffect(() => {
     const refetchPost = setTimeout(() => {
       const query = inputValue;
-      const url = `/search/issues?q=${query} repo:rocketseat-education/reactjs-github-blog-challenge`;
+      const url = `/search/issues?q=${query} repo:${REPONAME}`;
 
       fetchData(url);
     }, 2000);
@@ -53,7 +56,8 @@ export function Home() {
               Publicações
             </span>
             <span className="text-sm text-base-span">
-              {posts.length} Publicaç{posts.length > 1 ? "ões" : "ão"}
+              {posts.items.length} Publicaç
+              {posts.items.length > 1 ? "ões" : "ão"}
             </span>
             <input
               type="text"
@@ -65,7 +69,7 @@ export function Home() {
           </div>
 
           <div className="flex flex-wrap gap-6">
-            {posts.map((post) => (
+            {posts.items.map((post) => (
               <PostCard key={post.number} post={post} />
             ))}
           </div>
