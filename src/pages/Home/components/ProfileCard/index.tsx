@@ -7,7 +7,7 @@ import {
   Users2,
 } from "lucide-react";
 import { memo } from "react";
-import { ProfileCardSkeleton } from "../Skeleton";
+import { ProfileCardSkeleton } from "@/components/Skeleton";
 
 interface User {
   name: string;
