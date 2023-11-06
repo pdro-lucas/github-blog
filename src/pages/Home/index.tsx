@@ -21,6 +21,7 @@ export interface Post {
 }
 
 interface PostList {
+  total_count: number;
   items: Post[];
 }
 
@@ -56,9 +57,7 @@ export function Home() {
           Publicações
         </span>
         <span className="text-sm text-base-span">
-          {posts?.items.length === 1
-            ? `${posts?.items.length} Publicação`
-            : `${posts?.items.length} Publicações`}
+          {posts?.total_count} publicações
         </span>
         <input
           type="text"
