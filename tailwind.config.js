@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import scrollbar from "tailwind-scrollbar";
+import typography from "@tailwindcss/typography";
 
 export default {
   content: ["./index.html", "./src/**/*.tsx"],
@@ -25,5 +26,5 @@ export default {
       },
     },
   },
-  plugins: [scrollbar],
+  plugins: [scrollbar, typography],
 };
