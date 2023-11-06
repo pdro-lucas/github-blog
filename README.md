@@ -13,6 +13,13 @@ Funcionalidades principais:
 - **Lista de Issues/Posts**: Exibe todas as issues do repositório escolhido com um resumo, permitindo a filtragem e busca por conteúdo específico.
 - **Visualização de Post**: Permite ler o conteúdo completo de uma issue em formato de post de blog, com a formatação adequada de markdown para HTML.
 
+## To-Do
+
+- [ ] Evitar que o compoenete `PostCard` seja renderizado duas vezes ao carregar a página.
+- [ ] Adicionar responsividade.
+- [ ] Adicionar paginação.
+- [ ] Criar um arquivo para armazenar os tipos `Post` e `User`.
+
 ## Tecnologias Utilizadas
 
 - **React** com **Vite** e **TypeScript** para a base do projeto.
