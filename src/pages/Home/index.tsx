@@ -16,11 +16,12 @@ export interface Post {
   html_url: string;
   number: number;
   body: string;
+  comments: number;
   created_at: string;
   user: User;
 }
 
-interface PostList {
+export interface PostList {
   total_count: number;
   items: Post[];
 }
