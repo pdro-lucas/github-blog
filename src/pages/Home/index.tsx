@@ -1,6 +1,6 @@
 import { Loading } from "@/components/Loading";
 import { PostCard } from "@/components/PostCard";
-import { ProfileCard } from "@/components/ProfileCard";
+import { ProfileCard } from "./components/ProfileCard";
 import { useAPI } from "@/hooks/useAPI";
 import { useEffect, useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
